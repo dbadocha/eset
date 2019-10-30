@@ -10,12 +10,17 @@ FileData::~FileData()
 {
 }
 
-std::string FileData::fileName()
+std::string FileData::getFileName()
 {
-	return this->fName;
+	return fName;
 }
 
 std::string FileData::getFilePath()
 {
 	return fPath + "\\" + fName;
+}
+
+unsigned long long FileData::getSize()
+{
+	return size;
 }

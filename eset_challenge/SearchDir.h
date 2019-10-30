@@ -1,20 +1,20 @@
 #pragma once
 #include <string>
 #include <windows.h>
-#include "FilesQueue.h"
+#include "FilesListContainer.h"
 #include <tchar.h> 
 
 class SearchDir
 {
 public:
-	SearchDir(FilesQueue &queueHandler);
+	SearchDir(FilesListContainer &queueHandler);
 	~SearchDir();
 	void listDir(std::string dir);
 	int pathCheck(std::string &path);
 	void inputPathNorm(std::string &path);
 
 private:
-	FilesQueue &queueHandler;
+	FilesListContainer &queueHandler;
 	const unsigned int bitOffset = sizeof(DWORD) * 8;
 	
 };

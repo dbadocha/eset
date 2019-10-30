@@ -1,22 +1,43 @@
 #pragma once
-#include <vector>
 #include <string>
-#include "FilesQueue.h"
+#include <list>
+#include "FilesListContainer.h"
+#include "SearchMechanism.h"
+#include "FoundStringContainer.h"
 
-struct FoundString {
-	std::string file;
-	std::string offset;
-	std::string prefix;
-	std::string sufix;
+class SearchRequestsContainer : protected std::list<SearchMechanism *>
+{
+private:
+	SearchMechanism_Factory searchFactory;
+
+public:
+	SearchRequestsContainer();
+	~SearchRequestsContainer();
+
+	void addSearchRequest(FileData &fileToSearch);
+	SearchMechanism * getSearchRequest();
+	void concatFoundStringLists(FoundStringContainer &mainContainer);
 };
+
+
 
 class SearchManager
 {
-public:
-	SearchManager(FilesQueue &fQueue);
-	~SearchManager();
 private:
-	FilesQueue &queueHandler;
-	std::vector<FoundString> foundStrings;
-	void simpleSearch();
+	SearchRequestsContainer reqContainer;
+	FoundStringContainer foundStrings;
+	FilesListContainer &queueHandler;
+
+	void createReq();
+	void startReq();
+
+public:
+	SearchManager(FilesListContainer &fQueue);
+	~SearchManager();
+
+	void searchNext();
+	void searchAll();
 };
+
+
+

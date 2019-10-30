@@ -1,14 +1,16 @@
 #pragma once
 #include <queue>
-#include "FileData.h"
 #include <string>
 #include <iostream>
+#include "FileData.h"
 
-class FilesQueue : public std::queue<FileData>
+class FilesListContainer : public std::queue<FileData>
 {
+
 public:
-	FilesQueue();
-	~FilesQueue();
+	FilesListContainer();
+	~FilesListContainer();
+
 	void push(std::string fileName, std::string filePath, unsigned long long size);
 	void print();
 };

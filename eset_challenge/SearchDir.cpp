@@ -2,7 +2,7 @@
 
 
 
-SearchDir::SearchDir(FilesQueue &queueHandler)
+SearchDir::SearchDir(FilesListContainer &queueHandler)
 	: queueHandler(queueHandler)
 {
 }

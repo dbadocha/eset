@@ -115,17 +115,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Compare.cpp" />
     <ClCompile Include="FileData.cpp" />
     <ClCompile Include="FileMaping.cpp" />
-    <ClCompile Include="FilesQueue.cpp" />
+    <ClCompile Include="FilesListContainer.cpp" />
+    <ClCompile Include="FoundStringContainer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SearchDir.cpp" />
+    <ClCompile Include="SearchManager.cpp" />
+    <ClCompile Include="SearchMechanism.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Compare.h" />
     <ClInclude Include="FileData.h" />
     <ClInclude Include="FileMaping.h" />
-    <ClInclude Include="FilesQueue.h" />
+    <ClInclude Include="FilesListContainer.h" />
+    <ClInclude Include="FoundStringContainer.h" />
     <ClInclude Include="SearchDir.h" />
+    <ClInclude Include="SearchManager.h" />
+    <ClInclude Include="SearchMechanism.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
