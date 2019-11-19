@@ -2,6 +2,7 @@
 #include <string>
 #include <list>
 
+
 struct FoundString {
 	std::string file;
 	std::string offset;
@@ -9,14 +10,14 @@ struct FoundString {
 	std::string sufix;
 };
 
-class FoundStringContainer
+class FoundStringsData
 {
 private:
 	std::list<FoundString> container;
 
 public:
-	FoundStringContainer();
-	~FoundStringContainer();
+	FoundStringsData();
+	~FoundStringsData();
 
 	FoundString pop();
 	void push(FoundString foundData);

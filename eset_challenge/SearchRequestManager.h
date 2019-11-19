@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 #include <list>
-#include "FilesListContainer.h"
+#include "FilesData.h"
 #include "SearchMechanism.h"
-#include "FoundStringContainer.h"
+#include "FoundStringsData.h"
 
 class SearchRequestsContainer : protected std::list<SearchMechanism *>
 {
@@ -14,30 +14,26 @@ public:
 	SearchRequestsContainer();
 	~SearchRequestsContainer();
 
-	void addSearchRequest(FileData &fileToSearch);
+	void addSearchRequest(FilesData &fileToSearch);
 	SearchMechanism * getSearchRequest();
-	void concatFoundStringLists(FoundStringContainer &mainContainer);
 };
 
 
 
-class SearchManager
+class SearchRequestManager
 {
 private:
 	SearchRequestsContainer reqContainer;
-	FoundStringContainer foundStrings;
-	FilesListContainer &queueHandler;
+	FoundStringsData foundStrings;
+	FilesContainer &queueHandler;
 
 	void createReq();
-	void startReq();
+	void startReq(std::string &toFind);
 
 public:
-	SearchManager(FilesListContainer &fQueue);
-	~SearchManager();
+	SearchRequestManager(FilesContainer &fQueue);
+	~SearchRequestManager();
 
-	void searchNext();
+	void searchNext(std::string &toFind);
 	void searchAll();
 };
-
-
-

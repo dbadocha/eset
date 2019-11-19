@@ -5,3 +5,5 @@ x64/
 GeneratedFiles/
 Debug/
 eset_challenge/Debug/
+packages/
+test/

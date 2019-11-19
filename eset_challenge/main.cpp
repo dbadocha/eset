@@ -1,39 +1,39 @@
 #include <iostream>
 #include <conio.h>
-#include "FilesListContainer.h"
-#include "SearchDir.h"
+#include <chrono>
+#include <thread>
+#include "FilesData.h"
+#include "FoundFilesGenerator.h"
 #include "FileMaping.h"
-#include "SearchManager.h"
+#include "SearchRequestManager.h"
+#include "Test.h"
 
 
 int main() {
-	FilesListContainer fQueue;
 
-	SearchDir dir(fQueue);
-	dir.listDir("C:\\adb");
+	//FilesListProducer dir(fQueue);
 
-	//dir.listDir("C:\\Games\\Max Payne 3");
-	//fQueue.print();
-	//std::string path = "C:\\adb\\dousuniecia.txt";
+	//// GetLastError  if (hFile == ERROR_FILE_NOT_FOUND)
 
-	SIZE_T size = GetLargePageMinimum();
-	// SEC_LARGE_PAGES
+	//Test_FileReader test_rf;
+	//Test_SearchPage test_sp;
 
-	//ERROR_INVALID_HANDLE  ERROR_ALREADY_EXISTS
+	FoundFilesGenerator test("C:", "txt");
 
-	// GetLastError  if (hFile == ERROR_FILE_NOT_FOUND)
+	FilesData * pointer = NULL;
+	int i = 0;
+
+	while (pointer != NULL || i == 0)
+	{
+		pointer = test.findNext();
 
 
-	//FileMaping wewe("C:\\adb\\dousuniecia2.txt");
+		if (pointer != NULL)
+			std::cout << i << ": " << pointer->getFilePath() << std::endl;
+		++i;
 
-	FilesListContainer test;
-	test.push("test.txt", "C:\\adb", 166);
-	fQueue.pop();
-	fQueue.pop();
-	
-
-	SearchManager manager = SearchManager(test);
-	manager.searchNext();
+		delete pointer;
+	}
 
 	_getch();
 }

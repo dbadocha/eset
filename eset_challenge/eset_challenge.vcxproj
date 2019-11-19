@@ -77,6 +77,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -118,22 +121,27 @@
     <ClCompile Include="Compare.cpp" />
     <ClCompile Include="FileData.cpp" />
     <ClCompile Include="FileMaping.cpp" />
-    <ClCompile Include="FilesListContainer.cpp" />
-    <ClCompile Include="FoundStringContainer.cpp" />
+    <ClCompile Include="FoundStringsData.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SearchDir.cpp" />
-    <ClCompile Include="SearchManager.cpp" />
+    <ClCompile Include="FilesReader.cpp" />
+    <ClCompile Include="FoundFilesGenerator.cpp" />
+    <ClCompile Include="SearchRequestManager.cpp" />
     <ClCompile Include="SearchMechanism.cpp" />
+    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Compare.h" />
-    <ClInclude Include="FileData.h" />
+    <ClInclude Include="FilesData.h" />
     <ClInclude Include="FileMaping.h" />
-    <ClInclude Include="FilesListContainer.h" />
-    <ClInclude Include="FoundStringContainer.h" />
-    <ClInclude Include="SearchDir.h" />
-    <ClInclude Include="SearchManager.h" />
+    <ClInclude Include="FoundStringsData.h" />
+    <ClInclude Include="FileReader.h" />
+    <ClInclude Include="FoundFilesGenerator.h" />
+    <ClInclude Include="SearchRequestManager.h" />
     <ClInclude Include="SearchMechanism.h" />
+    <ClInclude Include="Test.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="eset_challenge.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

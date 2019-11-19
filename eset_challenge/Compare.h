@@ -1,15 +1,65 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <list>
+#include "FoundStringsData.h"
+#include "FileReader.h"
 
-class Compare
+struct matchInfo
 {
-	typedef std::string srt_t;
-	int offset;
+	FoundString stringData;
+	fileSize_t pageOffset;
+	fileSize_t charToCheckPos;
+};
+
+
+class SearchPage
+{
+private:
+	std::list <matchInfo> &matchList;
+	std::list <matchInfo> partialMatch;
+	std::list <matchInfo>::iterator it;
+
+	const std::string &toFind;
+	std::string prefixMem;
+
+	const char *toSearch;
+	fileSize_t pageSize;
+	fileSize_t fileOffset;
 
 public:
-	Compare();
-	~Compare();
+	SearchPage(std::list <matchInfo> &matchList, std::string &toFind);
+	~SearchPage();
 
-	int compare_str_char(srt_t *fileString, char toFindString[128], int char_len);
+	void fillOffset(matchInfo &toFill);
+	void fillPrefix(matchInfo &toFill);
+
+	void saveMatchInfo();
+	void nextPage(char * toSearch, fileSize_t len);
+	void addNewMatch(fileSize_t pageOffset);
+	int compare(char toCheck);
+
+	int startComparing();
+};
+
+
+class SearchFile
+{
+	std::list <matchInfo> matchList;
+	const std::string *toFind;
+
+	char toSearch[4096];
+	FilesData &fileToRead;
+
+	SearchPage *pageSearch;
+	FileReader *file;
+
+	fileSize_t pageSize = 0, fileSize = 0;
+
+public:
+	SearchFile(FilesData &fileToRead);
+	~SearchFile();
+
+	int searchFile();
+	void loadNewPage();
 };

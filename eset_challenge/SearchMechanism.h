@@ -1,19 +1,20 @@
 #pragma once
 
 #include <windows.h>
-#include "FoundStringContainer.h"
-#include "FilesListContainer.h"
-#include <fstream>
+#include "FoundStringsData.h"
+#include "FilesData.h"
+#include "FileReader.h"
 
 class SearchMechanism_Data
 {
 protected:
-	FileData fileToSearch;
-	FoundStringContainer foundStringsBuff;
-	std::string stringToFind;
+	FilesData fileToRead;
+	FoundStringsData foundStringsBuff;
+	std::string *toFind = NULL;
+	FileReader *fileReader;
 
 public:
-	SearchMechanism_Data(FileData &fileToSearch);
+	SearchMechanism_Data(FilesData &fileToRead);
 	~SearchMechanism_Data();
 };
 
@@ -24,33 +25,30 @@ public:
 	SearchMechanism();
 	~SearchMechanism();
 
-	virtual void setStringToFind(std::string &stringToFind) = 0;
 	virtual void search(std::string stringToFind) = 0;
-	virtual FoundStringContainer &getFoundData() = 0;
+	virtual FoundStringsData &getFoundData() = 0;
 };
 
 
 class SearchMechanism_Simple : public SearchMechanism_Data, public SearchMechanism
 {
 public:
-	SearchMechanism_Simple(FileData &fileToSearch);
+	SearchMechanism_Simple(FilesData &fileToRead);
 	~SearchMechanism_Simple();
 
-	void setStringToFind(std::string &stringToFind);
 	void search(std::string stringToFind);
-	FoundStringContainer &getFoundData();
+	FoundStringsData &getFoundData();
 };
 
 
 class SearchMechanism_Advanced : public SearchMechanism_Data, public SearchMechanism
 {
 public:
-	SearchMechanism_Advanced(FileData &fileToSearch);
+	SearchMechanism_Advanced(FilesData &fileToRead);
 	~SearchMechanism_Advanced();
 
-	void setStringToFind(std::string &stringToFind);
 	void search(std::string stringToFind);
-	FoundStringContainer &getFoundData();
+	FoundStringsData &getFoundData();
 };
 
 
@@ -63,5 +61,5 @@ public:
 	SearchMechanism_Factory();
 	~SearchMechanism_Factory();
 
-	SearchMechanism * getSearchMechanism(FileData &fileToSearch);
+	SearchMechanism *getSearchMechanism(FilesData &fileToSearch);
 };
