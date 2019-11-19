@@ -18,14 +18,15 @@ int main() {
 	//Test_FileReader test_rf;
 	//Test_SearchPage test_sp;
 
-	FoundFilesGenerator test("C:", "txt");
+	//FoundFilesGenerator *test = new FoundFilesGeneratorDir("C://adb", "txt");
+	FoundFilesGenerator *test = new FoundFilesGenerator_File("C://adb//adb.exe");
 
 	FilesData * pointer = NULL;
 	int i = 0;
 
 	while (pointer != NULL || i == 0)
 	{
-		pointer = test.findNext();
+		pointer = test->findNext();
 
 
 		if (pointer != NULL)
@@ -34,6 +35,7 @@ int main() {
 
 		delete pointer;
 	}
+	delete test;
 
 	_getch();
 }

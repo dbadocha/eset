@@ -17,28 +17,48 @@ public:
 	static bool isFile(std::string path);
 };
 
-/*
-Brakuje wyrzucania wyników w momencie podania bezpoœredniej œcie¿ki do pliku
-*/
+
 class FoundFilesGenerator
 {
 private:
 	const fileSize_t bitOffset = sizeof(DWORD) * 8;
-	const std::string extention;
-	WIN32_FIND_DATAA winFindData;
-	HANDLE hFind;
+
+protected:
 	std::list<std::string> pathList;
 	std::string pathMem;
+	WIN32_FIND_DATAA winFindData;
+	HANDLE hFind;
 
-	bool _isFile();
-	bool _isDir();
-	bool _isValid();
-	bool _checkExt();
+	bool isFile();
+	bool isDir();
+	bool isValid();
 
 public:
-	FoundFilesGenerator(std::string path, std::string range = "*");
+	FoundFilesGenerator(std::string path);
 	~FoundFilesGenerator();
 	std::string getPath();
 	fileSize_t getSize();
+	virtual FilesData *findNext() = 0;
+};
+
+
+class FoundFilesGenerator_Dir : public FoundFilesGenerator
+{
+private:
+	const std::string extention;
+	bool checkExt();
+
+public:
+	FoundFilesGenerator_Dir(std::string path, std::string range = "*");
+	~FoundFilesGenerator_Dir();
+	FilesData *findNext();
+};
+
+
+class FoundFilesGenerator_File : public FoundFilesGenerator
+{
+public:
+	FoundFilesGenerator_File(std::string path);
+	~FoundFilesGenerator_File();
 	FilesData *findNext();
 };

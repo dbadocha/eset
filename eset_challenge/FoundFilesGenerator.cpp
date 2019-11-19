@@ -53,10 +53,8 @@ bool Path::isFile(std::string path)
 
 
 
-FoundFilesGenerator::FoundFilesGenerator(std::string path, std::string extention)
-	: extention(extention)
+FoundFilesGenerator::FoundFilesGenerator(std::string path)
 {
-	std::transform(extention.begin(), extention.end(), extention.begin(), ::tolower);
 	pathList.push_back(Path::normalizePath(path));
 }
 
@@ -66,20 +64,20 @@ FoundFilesGenerator::~FoundFilesGenerator()
 }
 
 
-bool FoundFilesGenerator::_isFile()
+bool FoundFilesGenerator::isFile()
 {
-	if (!(winFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && _isValid())
+	if (!(winFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && isValid())
 		return true;
 	else
 		return false;
 }
 
 
-bool FoundFilesGenerator::_isDir()
+bool FoundFilesGenerator::isDir()
 {
 	if (winFindData.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY)
 		&& !(winFindData.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM)
-		&& _isValid()
+		&& isValid()
 		&& winFindData.cFileName[0] != '.')
 		return true;
 	else
@@ -87,31 +85,14 @@ bool FoundFilesGenerator::_isDir()
 }
 
 
-bool FoundFilesGenerator::_checkExt()
-{
-	if (extention == "*")
-		return true;
-
-	std::string fileName = winFindData.cFileName;
-	int pos = fileName.find_last_of('.');
-
-	fileName = fileName.substr(pos + 1);
-	std::transform(fileName.begin(), fileName.end(), fileName.begin(), ::tolower);
-
-	if (fileName == extention)
-		return true;
-
-	return false;
-}
-
-
-bool FoundFilesGenerator::_isValid()
+bool FoundFilesGenerator::isValid()
 {
 	if (hFind != INVALID_HANDLE_VALUE)
 		return true;
 	else
 		return false;
 }
+
 
 std::string FoundFilesGenerator::getPath()
 {
@@ -121,7 +102,7 @@ std::string FoundFilesGenerator::getPath()
 
 fileSize_t FoundFilesGenerator::getSize()
 {
-	if (!_isFile())
+	if (!isFile())
 		return 0;
 
 	fileSize_t tmpSize = static_cast<unsigned long long>(winFindData.nFileSizeHigh) << bitOffset;
@@ -129,7 +110,24 @@ fileSize_t FoundFilesGenerator::getSize()
 	return tmpSize;
 }
 
-FilesData *FoundFilesGenerator::findNext()
+
+
+
+
+FoundFilesGenerator_Dir::FoundFilesGenerator_Dir(std::string path, std::string extention)
+	: FoundFilesGenerator(path), extention(extention)
+{
+	std::transform(extention.begin(), extention.end(), extention.begin(), ::tolower);
+	pathList.push_back(Path::normalizePath(path));
+}
+
+
+FoundFilesGenerator_Dir::~FoundFilesGenerator_Dir()
+{
+}
+
+
+FilesData *FoundFilesGenerator_Dir::findNext()
 {
 	while (!pathList.empty() || hFind != 0)
 	{
@@ -149,14 +147,58 @@ FilesData *FoundFilesGenerator::findNext()
 			}
 		}
 
-		if (_isDir())
+		if (isDir())
 		{
 			pathList.push_back(Path::moveUp(getPath(), winFindData.cFileName));
 		}
-		else if (_isFile() && _checkExt())
+		else if (isFile() && checkExt())
 		{
 			return new FilesData(winFindData.cFileName, getPath(), getSize());
 		}
 	}
 	return NULL;
+}
+
+
+bool FoundFilesGenerator_Dir::checkExt()
+{
+	if (extention == "*")
+		return true;
+
+	std::string fileName = winFindData.cFileName;
+	int pos = fileName.find_last_of('.');
+
+	fileName = fileName.substr(pos + 1);
+	std::transform(fileName.begin(), fileName.end(), fileName.begin(), ::tolower);
+
+	if (fileName == extention)
+		return true;
+
+	return false;
+}
+
+
+
+
+
+FoundFilesGenerator_File::FoundFilesGenerator_File(std::string path)
+	: FoundFilesGenerator(path)
+{
+}
+
+
+FoundFilesGenerator_File::~FoundFilesGenerator_File()
+{
+}
+
+
+FilesData * FoundFilesGenerator_File::findNext()
+{
+	if (pathList.empty() || !Path::isFile(pathList.front()))
+		return NULL;
+	pathMem = pathList.front();
+	hFind = FindFirstFileA(pathMem.c_str(), &winFindData);
+	pathList.pop_front();
+
+	return new FilesData(winFindData.cFileName, Path::moveDown(pathMem), getSize());
 }
