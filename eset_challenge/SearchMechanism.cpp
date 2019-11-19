@@ -42,9 +42,9 @@ void SearchMechanism_Simple::search(std::string stringToFind)
 }
 
 
-FoundStringsData & SearchMechanism_Simple::getFoundData()
+FoundStringDatasDataContainer & SearchMechanism_Simple::getFoundData()
 {
-	return foundStringsBuff;
+	return FoundStringDatasBuff;
 }
 
 
@@ -69,9 +69,9 @@ void SearchMechanism_Advanced::search(std::string stringToFind)
 }
 
 
-FoundStringsData & SearchMechanism_Advanced::getFoundData()
+FoundStringDatasDataContainer & SearchMechanism_Advanced::getFoundData()
 {
-	return foundStringsBuff;
+	return FoundStringDatasBuff;
 }
 
 

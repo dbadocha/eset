@@ -3,7 +3,7 @@
 #include <list>
 #include "FilesData.h"
 #include "SearchMechanism.h"
-#include "FoundStringsData.h"
+#include "FoundStringDatasDataContainer.h"
 
 class SearchRequestsContainer : protected std::list<SearchMechanism *>
 {
@@ -24,7 +24,7 @@ class SearchRequestManager
 {
 private:
 	SearchRequestsContainer reqContainer;
-	FoundStringsData foundStrings;
+	FoundStringDatasDataContainer FoundStringDatas;
 	FilesContainer &queueHandler;
 
 	void createReq();

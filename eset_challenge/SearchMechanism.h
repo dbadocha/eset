@@ -1,7 +1,7 @@
 #pragma once
 
 #include <windows.h>
-#include "FoundStringsData.h"
+#include "FoundStringData.h"
 #include "FilesData.h"
 #include "FileReader.h"
 
@@ -9,7 +9,7 @@ class SearchMechanism_Data
 {
 protected:
 	FilesData fileToRead;
-	FoundStringsData foundStringsBuff;
+	FoundStringDataContainer FoundStringDatasBuff;
 	std::string *toFind = NULL;
 	FileReader *fileReader;
 
@@ -26,7 +26,7 @@ public:
 	~SearchMechanism();
 
 	virtual void search(std::string stringToFind) = 0;
-	virtual FoundStringsData &getFoundData() = 0;
+	virtual FoundStringDataContainer &getFoundData() = 0;
 };
 
 
@@ -37,7 +37,7 @@ public:
 	~SearchMechanism_Simple();
 
 	void search(std::string stringToFind);
-	FoundStringsData &getFoundData();
+	FoundStringDataContainer &getFoundData();
 };
 
 
@@ -48,7 +48,7 @@ public:
 	~SearchMechanism_Advanced();
 
 	void search(std::string stringToFind);
-	FoundStringsData &getFoundData();
+	FoundStringDataContainer &getFoundData();
 };
 
 

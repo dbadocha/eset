@@ -121,7 +121,7 @@
     <ClCompile Include="Compare.cpp" />
     <ClCompile Include="FileData.cpp" />
     <ClCompile Include="FileMaping.cpp" />
-    <ClCompile Include="FoundStringsData.cpp" />
+    <ClCompile Include="FoundStringData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="FilesReader.cpp" />
     <ClCompile Include="FoundFilesGenerator.cpp" />
@@ -133,7 +133,7 @@
     <ClInclude Include="Compare.h" />
     <ClInclude Include="FilesData.h" />
     <ClInclude Include="FileMaping.h" />
-    <ClInclude Include="FoundStringsData.h" />
+    <ClInclude Include="FoundStringData.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="FoundFilesGenerator.h" />
     <ClInclude Include="SearchRequestManager.h" />

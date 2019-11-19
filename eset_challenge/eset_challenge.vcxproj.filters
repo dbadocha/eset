@@ -19,12 +19,15 @@
     <Filter Include="Pliki źródłowe\concept">
       <UniqueIdentifier>{bc94c77b-259c-4861-a925-d83435c074bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki nagłówkowe\refactored">
+      <UniqueIdentifier>{44c4d285-62ee-4f48-8dda-e183c1790394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\refactored">
+      <UniqueIdentifier>{9acff666-3d14-43f6-98cd-cfa5511531c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="FileData.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="SearchMechanism.cpp">
@@ -45,10 +48,13 @@
     <ClCompile Include="FilesReader.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="FoundStringsData.cpp">
-      <Filter>Pliki źródłowe</Filter>
+    <ClCompile Include="FileData.cpp">
+      <Filter>Pliki źródłowe\refactored</Filter>
     </ClCompile>
     <ClCompile Include="FoundFilesGenerator.cpp">
+      <Filter>Pliki źródłowe\refactored</Filter>
+    </ClCompile>
+    <ClCompile Include="FoundStringData.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,13 +77,13 @@
     <ClInclude Include="FileReader.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="FoundStringsData.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="FilesData.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\refactored</Filter>
     </ClInclude>
     <ClInclude Include="FoundFilesGenerator.h">
+      <Filter>Pliki nagłówkowe\refactored</Filter>
+    </ClInclude>
+    <ClInclude Include="FoundStringData.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

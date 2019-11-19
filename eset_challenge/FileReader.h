@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include "FilesData.h"
-#include "FoundStringsData.h"
+#include "FoundStringData.h"
 
 
 

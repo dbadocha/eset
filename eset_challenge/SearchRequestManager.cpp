@@ -28,7 +28,7 @@ SearchMechanism * SearchRequestsContainer::getSearchRequest()
 
 
 SearchRequestManager::SearchRequestManager(FilesContainer &fQueue)
-	: queueHandler(fQueue), reqContainer(), foundStrings()
+	: queueHandler(fQueue), reqContainer(), FoundStringDatas()
 {
 }
 

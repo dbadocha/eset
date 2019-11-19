@@ -2,12 +2,12 @@
 #include <string>
 #include <iostream>
 #include <list>
-#include "FoundStringsData.h"
+#include "FoundStringData.h"
 #include "FileReader.h"
 
 struct matchInfo
 {
-	FoundString stringData;
+	FoundStringData stringData;
 	fileSize_t pageOffset;
 	fileSize_t charToCheckPos;
 };

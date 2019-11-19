@@ -18,24 +18,7 @@ int main() {
 	//Test_FileReader test_rf;
 	//Test_SearchPage test_sp;
 
-	//FoundFilesGenerator *test = new FoundFilesGeneratorDir("C://adb", "txt");
-	FoundFilesGenerator *test = new FoundFilesGenerator_File("C://adb//adb.exe");
-
-	FilesData * pointer = NULL;
-	int i = 0;
-
-	while (pointer != NULL || i == 0)
-	{
-		pointer = test->findNext();
-
-
-		if (pointer != NULL)
-			std::cout << i << ": " << pointer->getFilePath() << std::endl;
-		++i;
-
-		delete pointer;
-	}
-	delete test;
+	FoundStringsDataContainer test;
 
 	_getch();
 }
