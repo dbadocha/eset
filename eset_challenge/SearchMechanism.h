@@ -26,7 +26,7 @@ public:
 	~SearchMechanism();
 
 	virtual void search(std::string stringToFind) = 0;
-	virtual FoundStringDataContainer &getFoundData() = 0;
+	virtual FoundStringDataContainer *getFoundData() = 0;
 };
 
 
@@ -37,7 +37,7 @@ public:
 	~SearchMechanism_Simple();
 
 	void search(std::string stringToFind);
-	FoundStringDataContainer &getFoundData();
+	FoundStringDataContainer *getFoundData();
 };
 
 
@@ -48,7 +48,7 @@ public:
 	~SearchMechanism_Advanced();
 
 	void search(std::string stringToFind);
-	FoundStringDataContainer &getFoundData();
+	FoundStringDataContainer *getFoundData();
 };
 
 

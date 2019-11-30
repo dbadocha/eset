@@ -6,8 +6,7 @@
 #include "FoundFilesGenerator.h"
 #include "FileMaping.h"
 #include "SearchRequestManager.h"
-#include "Test.h"
-
+#include "FileScanner.h"
 
 int main() {
 
@@ -18,7 +17,12 @@ int main() {
 	//Test_FileReader test_rf;
 	//Test_SearchPage test_sp;
 
-	FoundStringsDataContainer test;
+	//FoundStringDataContainer test;
+
+	//FoundFilesGenerator *test = new FoundFilesGenerator("C:/adb/adb.exe");
+	//std::cout << test->next()->getFilePath() << "\n";
+
+	FileMaping asas("C:/adb/ssss.txt");
 
 	_getch();
 }

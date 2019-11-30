@@ -53,18 +53,19 @@ bool Path::isFile(std::string path)
 
 
 
-FoundFilesGenerator::FoundFilesGenerator(std::string path)
+FoundFilesGenerator_Base::FoundFilesGenerator_Base(std::string path)
 {
 	pathList.push_back(Path::normalizePath(path));
 }
 
 
-FoundFilesGenerator::~FoundFilesGenerator()
+FoundFilesGenerator_Base::~FoundFilesGenerator_Base()
 {
+	FindClose(hFind);
 }
 
 
-bool FoundFilesGenerator::isFile()
+bool FoundFilesGenerator_Base::isFile()
 {
 	if (!(winFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && isValid())
 		return true;
@@ -73,7 +74,7 @@ bool FoundFilesGenerator::isFile()
 }
 
 
-bool FoundFilesGenerator::isDir()
+bool FoundFilesGenerator_Base::isDir()
 {
 	if (winFindData.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY)
 		&& !(winFindData.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM)
@@ -85,7 +86,7 @@ bool FoundFilesGenerator::isDir()
 }
 
 
-bool FoundFilesGenerator::isValid()
+bool FoundFilesGenerator_Base::isValid()
 {
 	if (hFind != INVALID_HANDLE_VALUE)
 		return true;
@@ -94,13 +95,13 @@ bool FoundFilesGenerator::isValid()
 }
 
 
-std::string FoundFilesGenerator::getPath()
+std::string FoundFilesGenerator_Base::getPath()
 {
 	return pathMem;
 }
 
 
-fileSize_t FoundFilesGenerator::getSize()
+fileSize_t FoundFilesGenerator_Base::getSize()
 {
 	if (!isFile())
 		return 0;
@@ -114,8 +115,9 @@ fileSize_t FoundFilesGenerator::getSize()
 
 
 
+
 FoundFilesGenerator_Dir::FoundFilesGenerator_Dir(std::string path, std::string extention)
-	: FoundFilesGenerator(path), extention(extention)
+	: FoundFilesGenerator_Base(path), extention(extention)
 {
 	std::transform(extention.begin(), extention.end(), extention.begin(), ::tolower);
 	pathList.push_back(Path::normalizePath(path));
@@ -127,7 +129,7 @@ FoundFilesGenerator_Dir::~FoundFilesGenerator_Dir()
 }
 
 
-FilesData *FoundFilesGenerator_Dir::findNext()
+FilesData *FoundFilesGenerator_Dir::next()
 {
 	while (!pathList.empty() || hFind != 0)
 	{
@@ -182,7 +184,7 @@ bool FoundFilesGenerator_Dir::checkExt()
 
 
 FoundFilesGenerator_File::FoundFilesGenerator_File(std::string path)
-	: FoundFilesGenerator(path)
+	: FoundFilesGenerator_Base(path)
 {
 }
 
@@ -192,13 +194,38 @@ FoundFilesGenerator_File::~FoundFilesGenerator_File()
 }
 
 
-FilesData * FoundFilesGenerator_File::findNext()
+FilesData *FoundFilesGenerator_File::next()
 {
 	if (pathList.empty() || !Path::isFile(pathList.front()))
+	{
 		return NULL;
+	}
 	pathMem = pathList.front();
 	hFind = FindFirstFileA(pathMem.c_str(), &winFindData);
 	pathList.pop_front();
 
 	return new FilesData(winFindData.cFileName, Path::moveDown(pathMem), getSize());
+}
+
+
+
+
+
+FoundFilesGenerator::FoundFilesGenerator(std::string path, std::string range)
+{
+	if (Path::isFile(path))
+		generator = new FoundFilesGenerator_File(path);
+	else
+		generator = new FoundFilesGenerator_Dir(path, range);
+}
+
+
+FoundFilesGenerator::~FoundFilesGenerator()
+{
+}
+
+
+FilesData *FoundFilesGenerator::next()
+{
+	return generator->next();
 }

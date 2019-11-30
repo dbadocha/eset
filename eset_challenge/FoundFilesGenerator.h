@@ -18,7 +18,8 @@ public:
 };
 
 
-class FoundFilesGenerator
+
+class FoundFilesGenerator_Base
 {
 private:
 	const fileSize_t bitOffset = sizeof(DWORD) * 8;
@@ -34,15 +35,15 @@ protected:
 	bool isValid();
 
 public:
-	FoundFilesGenerator(std::string path);
-	~FoundFilesGenerator();
+	FoundFilesGenerator_Base(std::string path);
+	~FoundFilesGenerator_Base();
 	std::string getPath();
 	fileSize_t getSize();
-	virtual FilesData *findNext() = 0;
+	virtual FilesData *next() = 0;
 };
 
 
-class FoundFilesGenerator_Dir : public FoundFilesGenerator
+class FoundFilesGenerator_Dir : public FoundFilesGenerator_Base
 {
 private:
 	const std::string extention;
@@ -51,14 +52,27 @@ private:
 public:
 	FoundFilesGenerator_Dir(std::string path, std::string range = "*");
 	~FoundFilesGenerator_Dir();
-	FilesData *findNext();
+	FilesData *next();
 };
 
 
-class FoundFilesGenerator_File : public FoundFilesGenerator
+class FoundFilesGenerator_File : public FoundFilesGenerator_Base
 {
 public:
 	FoundFilesGenerator_File(std::string path);
 	~FoundFilesGenerator_File();
-	FilesData *findNext();
+	FilesData *next();
+};
+
+
+
+
+class FoundFilesGenerator
+{
+private:
+	FoundFilesGenerator_Base *generator;
+public:
+	FoundFilesGenerator(std::string path, std::string range = "*");
+	~FoundFilesGenerator();
+	FilesData *next();
 };

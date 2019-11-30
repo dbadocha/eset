@@ -33,20 +33,11 @@
     <ClCompile Include="SearchMechanism.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Compare.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="SearchRequestManager.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Test.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="FileMaping.cpp">
       <Filter>Pliki źródłowe\concept</Filter>
-    </ClCompile>
-    <ClCompile Include="FilesReader.cpp">
-      <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="FileData.cpp">
       <Filter>Pliki źródłowe\refactored</Filter>
@@ -55,6 +46,12 @@
       <Filter>Pliki źródłowe\refactored</Filter>
     </ClCompile>
     <ClCompile Include="FoundStringData.cpp">
+      <Filter>Pliki źródłowe\refactored</Filter>
+    </ClCompile>
+    <ClCompile Include="FileScanner.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="FileReader.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,13 +59,7 @@
     <ClInclude Include="SearchMechanism.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Compare.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="SearchRequestManager.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Test.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="FileMaping.h">
@@ -84,6 +75,9 @@
       <Filter>Pliki nagłówkowe\refactored</Filter>
     </ClInclude>
     <ClInclude Include="FoundStringData.h">
+      <Filter>Pliki nagłówkowe\refactored</Filter>
+    </ClInclude>
+    <ClInclude Include="FileScanner.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

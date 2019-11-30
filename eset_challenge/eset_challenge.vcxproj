@@ -118,19 +118,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Compare.cpp" />
+    <ClCompile Include="FileScanner.cpp" />
     <ClCompile Include="FileData.cpp" />
     <ClCompile Include="FileMaping.cpp" />
     <ClCompile Include="FoundStringData.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="FilesReader.cpp" />
+    <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FoundFilesGenerator.cpp" />
     <ClCompile Include="SearchRequestManager.cpp" />
     <ClCompile Include="SearchMechanism.cpp" />
-    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Compare.h" />
+    <ClInclude Include="FileScanner.h" />
     <ClInclude Include="FilesData.h" />
     <ClInclude Include="FileMaping.h" />
     <ClInclude Include="FoundStringData.h" />
@@ -138,7 +137,6 @@
     <ClInclude Include="FoundFilesGenerator.h" />
     <ClInclude Include="SearchRequestManager.h" />
     <ClInclude Include="SearchMechanism.h" />
-    <ClInclude Include="Test.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="eset_challenge.rc" />

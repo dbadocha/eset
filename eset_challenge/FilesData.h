@@ -6,7 +6,6 @@
 typedef long long fileSize_t;
 
 
-
 class FilesData
 {
 private:
