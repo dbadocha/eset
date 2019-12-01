@@ -9,9 +9,7 @@ class PageData
 private:
 	const char *data = NULL;
 	fileSize_t dataSize;
-
 	std::string prevPageMem;
-
 	fileSize_t pageSize;
 	fileSize_t fileOffset;
 

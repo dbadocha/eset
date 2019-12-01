@@ -26,8 +26,6 @@ class PageScanner
 private:
 	PageScannerData &data;
 	PageData &page;
-
-	//trzeba zainicjalizowaæ
 	const std::string stringToFind;
 	
 	void recalcPagePos();
@@ -36,16 +34,9 @@ private:
 	void scanPage();
 
 public:
-	PageScanner(PageScannerData &data, PageData &page);
-	// ???
-	// PageScanner(std::string stringToFind);
+	PageScanner(PageScannerData &data, PageData &page, std::string stringToFind);
 	~PageScanner();
 	void scanNextPage();
-
-	// ???
-	// char *data = NULL;
-	// fileSize_t dataSize;
-	// void scanNextPage(char *data, fileSize_t dataSize);
 };
 
 
@@ -53,18 +44,18 @@ struct DataWriterData
 {
 	std::list <partMatch> withFileOffset;
 	std::list <partMatch> withPrefix;
-	std::list <FoundStringData*> withSufix;
+	std::list <partMatch> withSufix;
 };
 
 
-class MorphemeWriter
+class FoundDataCreator
 {
 private:
 	PageData &page;
 
 public:
-	MorphemeWriter(PageData &page);
-	~MorphemeWriter();
+	FoundDataCreator(PageData &page);
+	~FoundDataCreator();
 
 	void writeFileOffset(std::list <partMatch> &input, std::list <partMatch> &output);
 	void writePrefix(std::list <partMatch> &input, std::list <partMatch> &output);

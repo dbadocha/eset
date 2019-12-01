@@ -1,22 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <string>
-#include <iostream>
-#include <debugapi.h>
-#include <fstream>
-
 #include "FoundFilesGenerator.h"
-
-class FileMaping
-{
-private:
-	HANDLE fFile;
-	LPVOID fileView;
-
-public:
-	FileMaping(std::string path);
-	~FileMaping();
-};
 
 
 class FileHandler
@@ -53,7 +38,7 @@ private:
 public:
 	//trzeba zakres
 	//wyczyszczenie po otwarciu
-	MapView(HANDLE hMMap);
+	MapView(HANDLE hMMap, unsigned long long offset, size_t numberOfBytes);
 	~MapView();
 	const char *getDataPointer();
 	size_t getSize();

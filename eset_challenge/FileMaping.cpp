@@ -1,31 +1,5 @@
 #include "FileMaping.h"
 
-FileMaping::FileMaping(std::string path)
-{
-	FileHandler fh(path);
-	MapHandler mh(fh.getHandle());
-
-	_SYSTEM_INFO  sysInfo;
-	GetSystemInfo(&sysInfo);
-	size_t granularity = sysInfo.dwAllocationGranularity;
-
-	char * tmp_buffer = (char *)MapViewOfFile(mh.getHandle(), FILE_MAP_READ, 0, 0, 0);
-
-
-	//size_t len = strlen(tmp_buffer)
-	//char * buffer = new char[bufferSize + 1]{};
-	//memcpy_s(&buffer[0], bufferSize, &tmp_buffer[0], bufferSize);
-	//delete buffer;
-}
-
-
-FileMaping::~FileMaping()
-{
-}
-
-
-
-
 
 FileHandler::FileHandler(std::string path)
 {
@@ -81,10 +55,13 @@ bool MapHandler::isValid()
 
 
 
-//zakres z jakie tworzymy
-MapView::MapView(HANDLE hMMap)
+
+MapView::MapView(HANDLE hMMap, unsigned long long offset, size_t numberOfBytes)
 {
-	mapView = (char *)MapViewOfFile(hMMap, FILE_MAP_READ, 0, 0, 0);
+	DWORD offsetHigh, offsetLow;
+	offsetLow |= offset;
+	offsetHigh |= offset >> 32;
+ 	mapView = (char *)MapViewOfFile(hMMap, FILE_MAP_READ, offsetHigh, offsetLow, numberOfBytes);
 }
 
 

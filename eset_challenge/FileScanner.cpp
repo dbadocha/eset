@@ -2,8 +2,8 @@
 
 
 
-PageScanner::PageScanner(PageScannerData &data, PageData &page)
-	:data(data), page(page)
+PageScanner::PageScanner(PageScannerData &data, PageData &page, std::string stringToFind)
+	:data(data), page(page), stringToFind(stringToFind)
 {
 }
 
