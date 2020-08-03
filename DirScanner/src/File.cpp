@@ -15,7 +15,7 @@ File::File(std::string path, size_t size)
 File::File(std::string name, std::string dir, size_t size)
 	:
 	_name(name),
-	_path(dir + "\\" + name),
+	_path(PathUtility::normalizePath(dir) + "\\" + name),
 	_size(size)
 {
 }

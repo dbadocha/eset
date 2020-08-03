@@ -31,7 +31,7 @@ std::string PathUtility::changeDirDown(std::string dir)
 
 std::string PathUtility::concatDir(std::string path, std::string file)
 {
-	if (isFile(path))
+	if (isFile(path) || hasFileExtension(path))
 		changeDirDown(path);
 
 	if (!file.length())
@@ -44,7 +44,7 @@ std::string PathUtility::getFileName(std::string path)
 {
 	std::string tmp = normalizePath(path);
 
-	if (!isFile(tmp))
+	if (!isFile(tmp) && !hasFileExtension(path))
 		return std::string();
 
 	int pos = path.find_last_of('\\');
@@ -83,4 +83,12 @@ int PathUtility::eraseEndSeparator(std::string & path)
 		path.erase(path.length() - 1);
 
 	return 0;
+}
+
+bool PathUtility::hasFileExtension(std::string path)
+{
+	int dotPosFromEnd = path.length() - path.find_last_of('.');
+	if (dotPosFromEnd == 0 || dotPosFromEnd > 5)
+		return false;
+	return true;
 }

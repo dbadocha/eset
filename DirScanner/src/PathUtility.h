@@ -13,4 +13,5 @@ private:
 	static int trimPath(std::string &path);
 	static int separatorUnification(std::string &path);
 	static int eraseEndSeparator(std::string &path);
+	static bool hasFileExtension(std::string path);
 };
