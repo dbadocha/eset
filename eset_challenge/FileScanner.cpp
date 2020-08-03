@@ -43,7 +43,7 @@ void FileScanner::initDataList(std::string &pattern)
 
 void FileScanner::initPageScanner(std::string &pattern)
 {
-	pageScanner = new PageScanner_SysLib(pattern);
+	//pageScanner = new PageScanner_SysLib(pattern);
 }
 
 
