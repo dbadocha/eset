@@ -129,7 +129,7 @@ FoundFilesGenerator_Dir::~FoundFilesGenerator_Dir()
 }
 
 
-FilesData *FoundFilesGenerator_Dir::next()
+FileData *FoundFilesGenerator_Dir::next()
 {
 	while (!pathList.empty() || hFind != 0)
 	{
@@ -155,7 +155,7 @@ FilesData *FoundFilesGenerator_Dir::next()
 		}
 		else if (isFile() && checkExt())
 		{
-			return new FilesData(winFindData.cFileName, getPath(), getSize());
+			return new FileData(winFindData.cFileName, getPath(), getSize());
 		}
 	}
 	return NULL;
@@ -194,7 +194,7 @@ FoundFilesGenerator_File::~FoundFilesGenerator_File()
 }
 
 
-FilesData *FoundFilesGenerator_File::next()
+FileData *FoundFilesGenerator_File::next()
 {
 	if (pathList.empty() || !Path::isFile(pathList.front()))
 	{
@@ -204,7 +204,7 @@ FilesData *FoundFilesGenerator_File::next()
 	hFind = FindFirstFileA(pathMem.c_str(), &winFindData);
 	pathList.pop_front();
 
-	return new FilesData(winFindData.cFileName, Path::moveDown(pathMem), getSize());
+	return new FileData(winFindData.cFileName, Path::moveDown(pathMem), getSize());
 }
 
 
@@ -225,7 +225,7 @@ FoundFilesGenerator::~FoundFilesGenerator()
 }
 
 
-FilesData *FoundFilesGenerator::next()
+FileData *FoundFilesGenerator::next()
 {
 	return generator->next();
 }

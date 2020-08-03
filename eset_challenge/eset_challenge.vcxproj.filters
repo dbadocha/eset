@@ -30,12 +30,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="SearchMechanism.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="SearchRequestManager.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="FileMaping.cpp">
       <Filter>Pliki źródłowe\concept</Filter>
     </ClCompile>
@@ -54,14 +48,11 @@
     <ClCompile Include="FileReader.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="PageScanner.cpp">
+      <Filter>Pliki źródłowe\refactored</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SearchMechanism.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="SearchRequestManager.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="FileMaping.h">
       <Filter>Pliki nagłówkowe\concept</Filter>
     </ClInclude>
@@ -79,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="FileScanner.h">
       <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="PageScanner.h">
+      <Filter>Pliki nagłówkowe\refactored</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

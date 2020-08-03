@@ -6,7 +6,7 @@
 typedef long long fileSize_t;
 
 
-class FilesData
+class FileData
 {
 private:
 	std::string fName;
@@ -14,8 +14,8 @@ private:
 	fileSize_t size;
 
 public:
-	FilesData(std::string fName, std::string fPath, fileSize_t size);
-	~FilesData();
+	FileData(std::string fName, std::string fPath, fileSize_t size);
+	~FileData();
 
 	std::string getName();
 	std::string getPath();
@@ -25,19 +25,19 @@ public:
 
 
 
-class FilesContainer 
+class FilesContainer
 {
 private:
-	std::queue<FilesData*> container;
+	std::queue<FileData*> container;
 
 public:
 	FilesContainer();
 	~FilesContainer();
 
-	void push(FilesData *newFile);
+	void push(FileData *newFile);
 	void pop();
 	bool empty();
-	FilesData* front();
+	FileData* front();
 	void clear();
 	void print();
 	FilesContainer &operator +=(FilesContainer &toAdd);

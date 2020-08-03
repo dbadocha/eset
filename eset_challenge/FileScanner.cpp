@@ -1,107 +1,64 @@
 #include "FileScanner.h"
 
 
-
-PageScanner::PageScanner(PageScannerData &data, PageData &page, std::string stringToFind)
-	:data(data), page(page), stringToFind(stringToFind)
+void PageToFileOffset::convert(std::list<fileSize_t> &pageSearchResult, fileSize_t fileOffset)
 {
-}
-
-
-PageScanner::~PageScanner()
-{
-}
-
-
-void PageScanner::scanNextPage()
-{
-	recalcPagePos();
-	scanPage();
-}
-
-
-void PageScanner::scanPage()
-{
-	const char *pageData = page.getDataPointer();
-	for (fileSize_t pagePos = 0; pagePos < page.getPageSize(); ++pagePos)
+	std::list<fileSize_t>::iterator it;
+	for (it = pageSearchResult.begin(); it != pageSearchResult.end(); ++it)
 	{
-		scanList(pageData[pagePos]);
-		checkFirstChar(pagePos);
+		*it = *it + fileOffset;
 	}
 }
 
-
-void PageScanner::scanList(char toCheck)
+std::list<fileSize_t> PageToFileOffset::convert_cpy(std::list<fileSize_t>& pageSearchResult, fileSize_t fileOffset)
 {
-	std::list <partMatch>::iterator it;
-	for (it = data.partialMatch.begin(); it != data.partialMatch.end(); ++it)
+	std::list<fileSize_t> returnList;
+	for (auto it : pageSearchResult)
 	{
-		if (toCheck == stringToFind[it->charToCheckPos])
-		{
-			++(it->charToCheckPos);
-
-			if (it->charToCheckPos == stringToFind.length())
-			{
-				data.pagePos.push_back(*it);
-				it = data.partialMatch.erase(it);
-			}
-		}
-		else
-			it = data.partialMatch.erase(it);
-
-		if (data.partialMatch.empty())
-			break;
+		returnList.push_front(it + fileOffset);
 	}
+	return returnList;
 }
 
 
-void PageScanner::checkFirstChar(fileSize_t pagePos)
+FileScanner::FileScanner(IFileReader_Generator &fileReader)
+	: fileReader(fileReader)
 {
-	if (page.getDataPointer()[pagePos] == stringToFind[0])
+}
+
+
+FileScanner::~FileScanner()
+{
+	delete(pageScanner);
+}
+
+
+void FileScanner::initDataList(std::string &pattern)
+{
+	returnList.pattern = pattern;
+	returnList.path = fileReader.getFilePath();
+	returnList.patternFilePos = {};
+}
+
+
+void FileScanner::initPageScanner(std::string &pattern)
+{
+	pageScanner = new PageScanner_SysLib(pattern);
+}
+
+
+void FileScanner::scanFile(std::string &pattern)
+{
+	initDataList(pattern);
+	initPageScanner(pattern);
+
+	while (!fileReader.isDone())
 	{
-		partMatch tmp{pagePos , 1};
-		data.partialMatch.push_back(tmp);
+		Page tmpPage = fileReader.yield();
+		std::list <fileSize_t> tmpList = pageScanner->scanNextPage(tmpPage);
+		PageToFileOffset::convert(tmpList, fileReader.getFileOffset());
+		returnList.patternFilePos.merge(tmpList);
+		tmpList.clear();
 	}
+	std::cout << returnList.patternFilePos.size() << "\n";
 }
-
-
-void PageScanner::recalcPagePos()
-{
-	std::list <partMatch>::iterator it;
-	for (it = data.partialMatch.begin(); it != data.partialMatch.end(); ++it)
-	{
-		it->pageOffset -= page.getPageSize();
-	}
-}
-
-
-MorphemeWriter::MorphemeWriter(PageData & page)
-	: page(page)
-{
-}
-
-MorphemeWriter::~MorphemeWriter()
-{
-}
-
-//FoundStringData *MorphemeWriter::fillPrefix(fileSize_t pagePos)
-//{
-//	FoundStringData *ret = new FoundStringData();
-//
-//	fileSize_t prefixPos = pagePos - 3;
-//	int prefixLen = 3;
-//
-//	if (prefixPos < 0)
-//	{
-//		fileSize_t memPos = page.getPageMem.length() - abs(prefixPos);
-//
-//		toFill.stringData.prefix = page.prevMem.substr(memPos, memPos + 1);
-//		prefixLen += static_cast<int>(prefixPos);
-//		prefixPos = 0;
-//	}
-//
-//	char buff[4];
-//	strncpy_s(buff, prefixLen, pageToSearch + prefixPos, prefixLen);
-//
-//	toFill.stringData.prefix += buff;
-//}

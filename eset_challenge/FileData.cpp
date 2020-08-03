@@ -1,35 +1,35 @@
 #include "FilesData.h"
 
-FilesData::FilesData(std::string fName, std::string fPath, fileSize_t size)
+FileData::FileData(std::string fName, std::string fPath, fileSize_t size)
 	: fName(fName), fPath(fPath), size(size)
 {
 }
 
 
-FilesData::~FilesData()
+FileData::~FileData()
 {
 }
 
 
-std::string FilesData::getName()
+std::string FileData::getName()
 {
 	return fName;
 }
 
 
-std::string FilesData::getPath()
+std::string FileData::getPath()
 {
 	return fPath;
 }
 
 
-std::string FilesData::getFilePath()
+std::string FileData::getFilePath()
 {
 	return fPath + "\\" + fName;
 }
 
 
-fileSize_t FilesData::getSize()
+fileSize_t FileData::getSize()
 {
 	return size;
 }
@@ -49,7 +49,7 @@ FilesContainer::~FilesContainer()
 }
 
 
-void FilesContainer::push(FilesData *newFile)
+void FilesContainer::push(FileData *newFile)
 {
 	container.push(newFile);
 }
@@ -61,7 +61,7 @@ void FilesContainer::pop()
 }
 
 
-FilesData* FilesContainer::front()
+FileData* FilesContainer::front()
 {
 	return container.front();
 }

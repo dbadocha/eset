@@ -1,66 +1,75 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include <list>
+#include <memory>
 #include "FoundStringData.h"
 #include "FileReader.h"
+#include "PageScanner.h"
 
 
-struct partMatch
+struct SearchData
 {
-	fileSize_t pageOffset = 0;
-	fileSize_t charToCheckPos = 0;
-	FoundStringData * stringData = NULL;
+	std::string pattern;
+	std::string path;
+	std::list <fileSize_t> patternFilePos;
 };
 
 
-struct PageScannerData
+class PageToFileOffset
 {
-	std::list <partMatch> partialMatch;
-	std::list <partMatch> pagePos;
+public:
+	static void convert(std::list <fileSize_t> &pageSearchResult, fileSize_t fileOffset);
+	static std::list <fileSize_t> convert_cpy(std::list <fileSize_t> &pageSearchResult, fileSize_t fileOffset);
 };
 
 
-class PageScanner
+class FileScanner
 {
 private:
-	PageScannerData &data;
-	PageData &page;
-	const std::string stringToFind;
-	
-	void recalcPagePos();
-	void scanList(char toCheck);
-	void checkFirstChar(fileSize_t pagePos);
-	void scanPage();
+	IFileReader_Generator &fileReader;
+	IPageScanner *pageScanner;
+	SearchData returnList;
+	void initDataList(std::string &pattern);
+	void initPageScanner(std::string &pattern);
 
 public:
-	PageScanner(PageScannerData &data, PageData &page, std::string stringToFind);
-	~PageScanner();
-	void scanNextPage();
+	FileScanner(IFileReader_Generator &fileReader);
+	~FileScanner();
+	void scanFile(std::string &pattern);
+	std::list <fileSize_t> &getResult();
 };
 
 
-struct DataWriterData
-{
-	std::list <partMatch> withFileOffset;
-	std::list <partMatch> withPrefix;
-	std::list <partMatch> withSufix;
-};
-
-
-class FoundDataCreator
-{
-private:
-	PageData &page;
-
-public:
-	FoundDataCreator(PageData &page);
-	~FoundDataCreator();
-
-	void writeFileOffset(std::list <partMatch> &input, std::list <partMatch> &output);
-	void writePrefix(std::list <partMatch> &input, std::list <partMatch> &output);
-	void writeSufix(std::list <partMatch> &input, std::list <FoundStringData*> &output);
-
-	FoundStringData *fillPrefix(fileSize_t pagePos);
-	FoundStringData *getSufix();
-};
+//class PatternDataCollector
+//{
+//private:
+//	IFileReader &fileReader;
+//	std::list <SearchData> retData;
+//
+//public:
+//	PatternDataCollector(IFileReader &fileReader);
+//	virtual std::list <SearchData> &getResult() = 0;
+//};
+//
+//
+//
+//class FileScanningManager
+//{
+//private:
+//	FileData &fileData;
+//	FoundStringDataContainer retData;
+//	IFileReader *fileReader;
+//	FileScanner *fileScanner;
+//	PatternDataCollector *dataCollector;
+//	void initReader();
+//	void initScanner();
+//	void initConnector();
+//	void scanFile();
+//	void collectData();
+//
+//public:
+//	FileScanningManager(FileData &fileData, FoundStringDataContainer &retData);
+//	~FileScanningManager();
+//	void scan(std::string pattern);
+//	FoundStringDataContainer &getData();
+//};

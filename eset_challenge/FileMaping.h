@@ -29,7 +29,7 @@ public:
 };
 
 
-class MapView
+class MapViewer
 {
 private:
 	char *mapView;
@@ -38,8 +38,16 @@ private:
 public:
 	//trzeba zakres
 	//wyczyszczenie po otwarciu
-	MapView(HANDLE hMMap, unsigned long long offset, size_t numberOfBytes);
-	~MapView();
+	MapViewer(HANDLE hMMap, fileSize_t offset, size_t numberOfBytes);
+	~MapViewer();
 	const char *getDataPointer();
 	size_t getSize();
 };
+
+
+//D³ugoœæ pliku
+//
+//LARGE_INTEGER qwFileSize;
+//qwFileSize.QuadPart = 0;
+//GetFileSizeEx(hFile, &qwFileSize);
+//std::cout << qwFileSize.QuadPart << "\n";

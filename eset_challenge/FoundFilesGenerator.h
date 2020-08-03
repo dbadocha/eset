@@ -39,7 +39,7 @@ public:
 	~FoundFilesGenerator_Base();
 	std::string getPath();
 	fileSize_t getSize();
-	virtual FilesData *next() = 0;
+	virtual FileData *next() = 0;
 };
 
 
@@ -52,7 +52,7 @@ private:
 public:
 	FoundFilesGenerator_Dir(std::string path, std::string range = "*");
 	~FoundFilesGenerator_Dir();
-	FilesData *next();
+	FileData *next();
 };
 
 
@@ -61,7 +61,7 @@ class FoundFilesGenerator_File : public FoundFilesGenerator_Base
 public:
 	FoundFilesGenerator_File(std::string path);
 	~FoundFilesGenerator_File();
-	FilesData *next();
+	FileData *next();
 };
 
 
@@ -74,5 +74,5 @@ private:
 public:
 	FoundFilesGenerator(std::string path, std::string range = "*");
 	~FoundFilesGenerator();
-	FilesData *next();
+	FileData *next();
 };

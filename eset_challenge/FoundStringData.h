@@ -5,10 +5,10 @@
 
 
 struct FoundStringData {
-	std::string file;
-	std::string offset;
-	std::string prefix;
-	std::string sufix;
+	std::string file = std::string("\03");
+	std::string offset = std::string("\03");
+	std::string prefix = std::string("\03");
+	std::string sufix = std::string("\03");
 };
 
 

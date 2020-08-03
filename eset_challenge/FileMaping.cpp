@@ -8,7 +8,7 @@ FileHandler::FileHandler(std::string path)
 		, FILE_SHARE_READ
 		, NULL
 		, OPEN_EXISTING
-		, FILE_ATTRIBUTE_NORMAL | FILE_ATTRIBUTE_READONLY | FILE_FLAG_SEQUENTIAL_SCAN
+		, FILE_ATTRIBUTE_NORMAL | FILE_ATTRIBUTE_READONLY
 		, NULL);
 }
 
@@ -56,7 +56,7 @@ bool MapHandler::isValid()
 
 
 
-MapView::MapView(HANDLE hMMap, unsigned long long offset, size_t numberOfBytes)
+MapViewer::MapViewer(HANDLE hMMap, fileSize_t offset, size_t numberOfBytes)
 {
 	DWORD offsetHigh, offsetLow;
 	offsetLow |= offset;
@@ -65,19 +65,19 @@ MapView::MapView(HANDLE hMMap, unsigned long long offset, size_t numberOfBytes)
 }
 
 
-MapView::~MapView()
+MapViewer::~MapViewer()
 {
 	UnmapViewOfFile(mapView);
 }
 
 
-const char * MapView::getDataPointer()
+const char * MapViewer::getDataPointer()
 {
 	return mapView;
 }
 
 
-size_t MapView::getSize()
+size_t MapViewer::getSize()
 {
 	return strlen(mapView);
 }
