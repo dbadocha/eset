@@ -6,17 +6,17 @@
 
 int main()
 {
-	std::string path = "C:\\*";
+	std::string path = "C:\\Qt\\*";
 
-	ScannerUtility utility;
-	utility.findFirstFile(path.c_str());
+	DirScanner scanner;
 
-	if (!utility.isValid())
-		return 1;
-	do
-	{
-		std::cout << utility.getFileName() << '\n';
-	} while (utility.findNextFile() != 0);
+	ScannerFilter *dirFilter = new ScannerFilter_Dir();
+	ScannerFilter *fileFilter = new ScannerFilter_File("txt");
+
+	scanner.scan(path, *fileFilter);
+
+	delete dirFilter;
+	delete fileFilter;
 
 	return 0;
 }

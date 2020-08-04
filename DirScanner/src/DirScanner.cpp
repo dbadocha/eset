@@ -1,6 +1,7 @@
 #include "DirScanner.h"
 #include "PathUtility.h"
 
+#include <iostream>
 ScanningMechanism::ScanningMechanism()
 {
 }
@@ -82,8 +83,6 @@ std::vector<File> DirScanner::scan(std::string path)
 {
 	std::vector<File> ret;
 
-	std::string path = "C:\\*";
-
 	_scanner.findFirstFile(path.c_str());
 
 	if (!_scanner.isValid())
@@ -97,12 +96,44 @@ std::vector<File> DirScanner::scan(std::string path)
 	return std::vector<File>();
 }
 
-std::vector<File> DirScanner::scan(std::string dir, std::string fileExt)
+std::vector<File> DirScanner::scan(std::string dir, ScannerFilter &filter)
 {
+	std::vector<File> ret;
+
+	_scanner.findFirstFile(dir.c_str());
+
+	if (!_scanner.isValid())
+		return std::vector<File>();
+
+	do
+	{
+		filter.check(_scanner);
+	} while (_scanner.findNextFile() != 0);
+
 	return std::vector<File>();
 }
 
-std::vector<File> DirScanner::scanDir(std::string & path)
+ScannerFilter_File::ScannerFilter_File(std::string extension)
+	:
+	_extension(extension)
 {
-	return std::vector<File>();
+}
+
+bool ScannerFilter_File::check(ScanningMechanism &scanner)
+{
+	if (!scanner.isFile())
+		return false;
+
+	std::string name = scanner.getFileName();
+	std::string ext = name.substr(name.length() - _extension.length());
+
+	return (ext == _extension);
+}
+
+bool ScannerFilter_Dir::check(ScanningMechanism & scanner)
+{
+	if (scanner.isDir())
+		return true;
+	else
+		return false;
 }
