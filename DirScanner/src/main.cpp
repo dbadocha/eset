@@ -1,28 +1,22 @@
+#include "DirScanner.h"
+
 #include <iostream>
 #include <windows.h>
 
+
 int main()
 {
-	std::string path = "C:\\adb\\*.*";
-	WIN32_FIND_DATA FindFileData;
-	HANDLE hFind;
+	std::string path = "C:\\*";
 
-	hFind = FindFirstFileEx(
-		path.c_str(),
-		FindExInfoBasic,
-		&FindFileData,
-		FindExSearchNameMatch,
-		NULL,
-		0);
+	ScannerUtility utility;
+	utility.findFirstFile(path.c_str());
 
-	if (hFind == INVALID_HANDLE_VALUE)
+	if (!utility.isValid())
 		return 1;
 	do
 	{
-		std::cout << FindFileData.cFileName << '\n';
-	} while (FindNextFileA(hFind, &FindFileData) != 0);
-
-	FindClose(hFind);
+		std::cout << utility.getFileName() << '\n';
+	} while (utility.findNextFile() != 0);
 
 	return 0;
 }

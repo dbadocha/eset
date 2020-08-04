@@ -6,45 +6,35 @@
 #include <string>
 #include <windows.h>
 
-namespace DirScanner
+class ScanningMechanism
 {
-	class DirScanner
-	{
-	public:
-		DirScanner();
-		~DirScanner();
-		std::vector<File> scan(std::string path);
-		std::vector<File> scan(std::string dir, std::string fileExt);
-		std::vector<File> scanDir(std::string &path);
-	};
+public:
+	ScanningMechanism();
+	~ScanningMechanism();
+	bool findFirstFile(LPCSTR lpFileName);
+	bool findNextFile();
+	bool isFile();
+	bool isDir();
+	bool isValid();
+	size_t getSize();
+	std::string getFileName();
+private:
+	WIN32_FIND_DATAA _winFindData;
+	HANDLE _hFind;
+};
 
 
-	class ScanningMechanism
-	{
-	public:
-		ScanningMechanism(std::string path);
-		~ScanningMechanism();
-	private:
-		std::string _path;
-		std::vector<File> fileScan();
-		std::vector<File> dirScan();
-		std::vector<File> recursiveDirScan();
+//drzewo katalogów
+//skanowanie folderów
+//funkcja nastêpny katalog
 
-	};
-
-	class ScannerUtility
-	{
-	public:
-		ScannerUtility();
-		~ScannerUtility();
-		bool FindFirstFile(LPCSTR lpFileName);
-		bool FindNextFile();
-		bool isFile();
-		bool isDir();
-		bool isValid();
-		size_t getSize();
-	private:
-		WIN32_FIND_DATAA _winFindData;
-		HANDLE _hFind;
-	};
-}
+class DirScanner
+{
+public:
+	DirScanner();
+	~DirScanner();
+	std::vector<File> scan(std::string path);
+	std::vector<File> scan(std::string dir, std::string fileExt);
+private:
+	ScanningMechanism _scanner;
+};

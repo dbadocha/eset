@@ -1,95 +1,16 @@
 #include "DirScanner.h"
 #include "PathUtility.h"
 
-DirScanner::DirScanner()
-{
-}
-
-DirScanner::~DirScanner()
-{
-}
-
-std::vector<File> DirScanner::scan(std::string path)
-{
-	std::vector<File> ret;
-
-	if (!PathUtility::isValid(path))
-		return ret;
-
-	if (PathUtility::isFile(path))
-		ret.push_back(File(path, 0));
-	else
-		scanDir(path);
-
-	return std::vector<File>();
-}
-
-std::vector<File> DirScanner::scan(std::string dir, std::string fileExt)
-{
-	return std::vector<File>();
-}
-
-std::vector<File> DirScanner::scanDir(std::string & path)
-{
-	WIN32_FIND_DATA FindFileData;
-	HANDLE hFind;
-
-	hFind = FindFirstFileEx(
-		path.c_str(),
-		FindExInfoBasic,
-		&FindFileData,
-		FindExSearchNameMatch,
-		NULL,
-		0);
-
-	do
-	{
-
-	} while (FindNextFileA(hFind, &FindFileData) != 0);
-
-	FindClose(hFind);
-
-	return std::vector<File>();
-}
-
-ScanningMechanism::ScanningMechanism(std::string path)
+ScanningMechanism::ScanningMechanism()
 {
 }
 
 ScanningMechanism::~ScanningMechanism()
 {
-}
-
-std::vector<File> ScanningMechanism::fileScan()
-{
-	if (!PathUtility::isFile(_path))
-		return std::vector<File>();
-
-	_hFind = FindFirstFileEx(
-		_path.c_str(),
-		FindExInfoBasic,
-		&_winFindData,
-		FindExSearchNameMatch,
-		NULL,
-		0);
-
-	if (_hFind == INVALID_HANDLE_VALUE)
-		return std::vector<File>();
-	FindClose(_hFind);
-
-	return std::vector<File>();
-}
-
-ScannerUtility::ScannerUtility()
-{
-}
-
-ScannerUtility::~ScannerUtility()
-{
 	FindClose(_hFind);
 }
 
-bool ScannerUtility::findFirstFile(LPCSTR lpFileName)
+bool ScanningMechanism::findFirstFile(LPCSTR lpFileName)
 {
 	_hFind = FindFirstFileEx(
 		lpFileName,
@@ -102,12 +23,12 @@ bool ScannerUtility::findFirstFile(LPCSTR lpFileName)
 	return isValid();
 }
 
-bool ScannerUtility::findNextFile()
+bool ScanningMechanism::findNextFile()
 {
 	return FindNextFileA(_hFind, &_winFindData);
 }
 
-bool ScannerUtility::isFile()
+bool ScanningMechanism::isFile()
 {
 	if (!(_winFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && isValid())
 		return true;
@@ -115,7 +36,7 @@ bool ScannerUtility::isFile()
 		return false;
 }
 
-bool ScannerUtility::isDir()
+bool ScanningMechanism::isDir()
 {
 	if (_winFindData.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY)
 		&& !(_winFindData.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM)
@@ -126,7 +47,7 @@ bool ScannerUtility::isDir()
 		return false;
 }
 
-bool ScannerUtility::isValid()
+bool ScanningMechanism::isValid()
 {
 	if (_hFind != INVALID_HANDLE_VALUE)
 		return true;
@@ -134,7 +55,7 @@ bool ScannerUtility::isValid()
 		return false;
 }
 
-size_t ScannerUtility::getSize()
+size_t ScanningMechanism::getSize()
 {
 	if (!isFile())
 		return 0;
@@ -142,4 +63,46 @@ size_t ScannerUtility::getSize()
 	size_t tmpSize = static_cast<size_t>(_winFindData.nFileSizeHigh) << bitOffset;
 	tmpSize = tmpSize | _winFindData.nFileSizeLow;
 	return tmpSize;
+}
+
+std::string ScanningMechanism::getFileName()
+{
+	return std::string(_winFindData.cFileName);
+}
+
+DirScanner::DirScanner()
+{
+}
+
+DirScanner::~DirScanner()
+{
+}
+
+std::vector<File> DirScanner::scan(std::string path)
+{
+	std::vector<File> ret;
+
+	std::string path = "C:\\*";
+
+	_scanner.findFirstFile(path.c_str());
+
+	if (!_scanner.isValid())
+		return std::vector<File>();
+
+	do
+	{
+
+	} while (_scanner.findNextFile() != 0);
+
+	return std::vector<File>();
+}
+
+std::vector<File> DirScanner::scan(std::string dir, std::string fileExt)
+{
+	return std::vector<File>();
+}
+
+std::vector<File> DirScanner::scanDir(std::string & path)
+{
+	return std::vector<File>();
 }
