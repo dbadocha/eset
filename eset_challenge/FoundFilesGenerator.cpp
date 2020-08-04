@@ -117,7 +117,9 @@ fileSize_t FoundFilesGenerator_Base::getSize()
 
 
 FoundFilesGenerator_Dir::FoundFilesGenerator_Dir(std::string path, std::string extention)
-	: FoundFilesGenerator_Base(path), extention(extention)
+	:
+	FoundFilesGenerator_Base(path),
+	extention(extention)
 {
 	std::transform(extention.begin(), extention.end(), extention.begin(), ::tolower);
 	pathList.push_back(Path::normalizePath(path));

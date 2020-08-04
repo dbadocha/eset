@@ -20,12 +20,18 @@
     <ClCompile Include="src\PathUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\DirScanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PathUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirScanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

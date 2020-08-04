@@ -1,8 +1,10 @@
 #include "PathUtility.h"
 
 #include <algorithm>
-#include <windows.h>
 
+
+WIN32_FIND_DATAA PathUtility::_winFindData = {};
+HANDLE PathUtility::_hFind = {};
 
 std::string PathUtility::normalizePath(std::string path)
 {
@@ -52,17 +54,43 @@ std::string PathUtility::getFileName(std::string path)
 	return tmp.substr(pos + 1);
 }
 
-bool PathUtility::isFile(std::string PathUtility)
+bool PathUtility::isFile(std::string &path)
 {
-	WIN32_FIND_DATAA winFindData;
-	HANDLE hFind;
+	_hFind = FindFirstFileA(normalizePath(path).c_str(), &_winFindData);
 
-	hFind = FindFirstFileA(normalizePath(PathUtility).c_str(), &winFindData);
-
-	if (!(winFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && hFind != INVALID_HANDLE_VALUE)
+	if (!(_winFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && _hFind != INVALID_HANDLE_VALUE)
 		return true;
 	else
 		return false;
+}
+
+bool PathUtility::isDir(std::string &path)
+{
+	if (_winFindData.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY)
+		&& !(_winFindData.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM)
+		&& isValid(_hFind)
+		&& _winFindData.cFileName[0] != '.')
+		return true;
+	else
+		return false;
+}
+
+bool PathUtility::isValid(HANDLE &handle)
+{
+	if (handle != INVALID_HANDLE_VALUE)
+		return true;
+	else
+		return false;
+}
+
+size_t PathUtility::getSize(std::string & path)
+{
+	if (!isFile(path))
+		return 0;
+
+	size_t tmpSize = static_cast<size_t>(_winFindData.nFileSizeHigh) << bitOffset;
+	tmpSize = tmpSize | _winFindData.nFileSizeLow;
+	return tmpSize;
 }
 
 int PathUtility::trimPath(std::string & path)

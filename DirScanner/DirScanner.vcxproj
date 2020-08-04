@@ -126,11 +126,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DirScanner.cpp" />
     <ClCompile Include="src\PathUtility.cpp" />
     <ClCompile Include="src\File.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DirScanner.h" />
     <ClInclude Include="src\PathUtility.h" />
     <ClInclude Include="src\File.h" />
   </ItemGroup>
